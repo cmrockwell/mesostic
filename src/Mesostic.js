@@ -46,6 +46,7 @@ Mesostic.prototype.getWord = function(letter){
 			continue;
 		} 
 	}
+	return -1;// reached the end but there was no match
 };
 
 Mesostic.prototype.getPureWord = function(letter){
@@ -63,6 +64,7 @@ Mesostic.prototype.getPureWord = function(letter){
 			continue;
 		} 
 	}
+	return 0;// reached the end but there was no match
 };
 
 Mesostic.prototype.getIndex = function(){
@@ -71,9 +73,30 @@ Mesostic.prototype.getIndex = function(){
 
 Mesostic.prototype.makeNonPure = function(){
 	this.spInd++; 	
-	this.poem.push(this.getWord(this.getSpine().charAt(this.spInd)));
-	if (this.poem.length < this.getSpine().length){
+	var found= this.getWord(this.getSpine().charAt(this.spInd))
+	if (found !=0){
+		this.poem.push(found);	
+	}
+		if (this.poem.length < this.getSpine().length){
 		this.makeNonPure();
+	}
+	else{
+		this.spInd=0;
+	}
+};
+
+Mesostic.prototype.makePure = function(){
+	this.spInd++; 	
+	var found= this.getPureWord(this.getSpine().charAt(this.spInd))
+	if (found !=0){
+		this.poem.push(found);	
+	}
+	
+	if (this.poem.length < this.getSpine().length){
+		this.makePure();
+	}
+	else{
+		this.spInd=0;
 	}
 };
 

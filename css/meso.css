@@ -1,0 +1,21 @@
+/* css for the game of life*/
+
+body{
+	background-color: #FF99FF; /*#6A5ACD;*/
+	color:#000000;
+	font-size: 1em;
+}
+
+h1 {font-size: 1.75em; font-weight:  bold; font-variant: small-caps; letter-spacing: .25em; } /*change 3 h1 font size text-align: center;*/
+
+#wrapper {margin: 20px; border: 0px solid #000; padding: 10px;} /*auto width: 1000px;*/
+
+#poem {display:inline; float: left; }
+
+#poem textarea{ background-color:#DDD; color:#333;}
+
+#inputText {display:inline; float: left;}
+
+button {clear:both;}
+
+.text {width: 45%;}

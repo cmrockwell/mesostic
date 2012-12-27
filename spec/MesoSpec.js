@@ -48,5 +48,11 @@ describe('Mesostic Generator',function(){
 		meso.makeNonPure(); 		
 		expect(meso.poem.toString()).toEqual("mesostic,poem,vertical,intersects,lines");
 	});  
+
+	it('give a pure mesostic',function(){	
+		meso.setSpine("SON");
+		meso.makePure(); 		
+		expect(meso.poem.toString()).toEqual("is,poem,intersects");
+	});  
 	
 });
