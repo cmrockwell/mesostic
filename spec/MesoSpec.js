@@ -22,16 +22,17 @@ describe('Mesostic Generator',function(){
 		expect(meso.getSeed(1)).toEqual("mesostic");
 	});
 	
-	xit('finds the next word that contains the current letter in the spine word',function(){	 		
-		expect(meso.getWord(0)).toEqual("mesostic");
+	it('finds the first word that contains a letter from the spine word',function(){	 		
+		expect(meso.getWord('S')).toEqual("mesostic");
 	});
 
-	xit('the found word does not contain next spine letter after the current letter in found word',function(){	 		
-		expect(meso.getWord(1)).toEqual("mesostic");
+	it('the found word does not repeat spine letter in found word',function(){	 		
+		expect(meso.getPureWord('S')).toEqual("is");
 	});  
 	
-	xit('the found word does not repeat current spine letter (only for 100% mesostic)',function(){	 		
-		expect(meso.getWord(2)).toEqual("mesostic");
-	});  	
-  
+	it('gives an index of the next in the seed text',function(){	
+		meso.getPureWord('S'); 		
+		expect(meso.getIndex()).toEqual(3);
+	});  
+	
 });
