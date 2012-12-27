@@ -35,4 +35,12 @@ describe('Mesostic Generator',function(){
 		expect(meso.getIndex()).toEqual(3);
 	});  
 	
+	it('reduces the seed text array',function(){	 		
+		meso.getWord('S');// populate the array
+		var len = meso.textArr.length;
+		meso.getPureWord('S'); 
+		expect(len).toEqual(meso.textArr.length+3);
+	});  
+		
+	
 });
