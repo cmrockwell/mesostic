@@ -4,13 +4,15 @@
 var Mesostic = function() {
 	var spineWord="";
 	var seedText="";
-	var poem="";
+	this.poem=[];
 	this.textArr=[];
+	this.index = 0; // refers to place in seed text
+	this.spInd = -1; // refers to place in spine word
 };
 
-Mesostic.prototype.init = function() {
-	//var pattern = /[a-z-']+/i; // matches words with no digits
-    //textArr = seedText.match(pattern);
+Mesostic.prototype.init = function(spine, seed) {
+	this.setSpine(spine);
+	this.setSeed(seed);
 };
 
 Mesostic.prototype.setSpine = function(sp) {
@@ -35,7 +37,10 @@ Mesostic.prototype.getWord = function(letter){
 	var patternStr = new RegExp('[a-z]*'+letter+'[a-z]*','i');
 	for (var i=0; i<this.textArr.length; i++){
 		if (patternStr.test(this.textArr[i])){
-				return this.textArr[i];
+				this.index = i+1;
+				var foundWord = this.textArr[i];
+				this.textArr = this.textArr.slice(this.index);
+				return foundWord;
 			}
 		else{
 			continue;
@@ -62,6 +67,14 @@ Mesostic.prototype.getPureWord = function(letter){
 
 Mesostic.prototype.getIndex = function(){
 	return this.index;
+};
+
+Mesostic.prototype.makeNonPure = function(){
+	this.spInd++; 	
+	this.poem.push(this.getWord(this.getSpine().charAt(this.spInd)));
+	if (this.poem.length < this.getSpine().length){
+		this.makeNonPure();
+	}
 };
 
 window.Mesostic = Mesostic;
