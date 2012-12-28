@@ -54,5 +54,11 @@ describe('Mesostic Generator',function(){
 		meso.makePure(); 		
 		expect(meso.poem.toString()).toEqual("is,poem,intersects");
 	});  
+
+	it('can handle spaces',function(){	
+		meso.setSpine("IS HAT");
+		meso.makeNonPure(); 		
+		expect(meso.poem.toString()).toEqual("mesostIc,iS, ,otHer,typogrAphy,That");
+	}); 
 	
 });

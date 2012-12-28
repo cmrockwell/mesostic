@@ -43,6 +43,9 @@ Mesostic.prototype.getSeed = function(ind) {
 };
 
 Mesostic.prototype.getWord = function(letter){
+	if (letter ===' '){		
+		return letter;
+	}
 	var patternStr = new RegExp('[a-z]*'+letter+'[a-z]*','i');
 	for (var i=0; i<this.textArr.length; i++){
 		if (patternStr.test(this.textArr[i])){
@@ -86,7 +89,7 @@ Mesostic.prototype.getIndex = function(){
 Mesostic.prototype.makeNonPure = function(){
 	this.spInd++; 	
 	var found= this.getWord(this.getSpine().charAt(this.spInd));
-	if (found !=0){
+	if (found !==0){
 		this.poem.push(found);	
 		}
 	if (this.poem.length < this.getSpine().length){
