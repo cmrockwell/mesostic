@@ -62,8 +62,9 @@ describe('Mesostic Generator',function(){
 	}); 
 	
 	it('has a has a max index', function(){
+		meso.setSpine("IS HAT");
 		meso.makeNonPure(); 
-		expect(meso.maxIndexOfSpineLtr).toEqual(4);	
+		expect(meso.maxIndexOfSpineLtr).toEqual(6);	
 	});
 	
 });

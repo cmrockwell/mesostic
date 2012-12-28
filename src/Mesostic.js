@@ -47,7 +47,8 @@ Mesostic.prototype.getSeed = function(ind) {
 };
 
 Mesostic.prototype.getWord = function(letter){
-	if (letter ===' '){		
+	if (letter ===' '){	
+		this.spineLtrs.push(0);	
 		return letter;
 	}
 	var patternStr = new RegExp('[a-z]*'+letter+'[a-z]*','i');

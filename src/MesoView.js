@@ -16,7 +16,7 @@ MesoView.prototype.init = function (c) {
 	});
 
 	$('input#spine').focus(function(){
- 		if ($(this).val()==='PASTE'){
+ 		if ($(this).val()==='try to create'){
  			$(this).val('');
  		}
 	});
