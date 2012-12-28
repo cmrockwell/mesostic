@@ -21,7 +21,7 @@ describe('Mesostic Generator',function(){
 	});
 	
 	it('finds the first word that contains a letter from the spine word',function(){	 		
-		expect(meso.getWord('S')).toEqual("mesostic");
+		expect(meso.getWord('S')).toEqual("meSostic");
 	});
 
 	xit('the found word does not have next spine letter in found word after current letter',function(){	 		
@@ -46,7 +46,7 @@ describe('Mesostic Generator',function(){
 		
 	it('give a non pure mesostic',function(){	
 		meso.makeNonPure(); 		
-		expect(meso.poem.toString()).toEqual("mesostic,poem,vertical,intersects,lines");
+		expect(meso.poem.toString()).toEqual("meSostic,Poem,vertIcal,iNtersects,linEs");
 	});  
 
 	it('give a pure mesostic',function(){	

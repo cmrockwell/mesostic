@@ -12,18 +12,20 @@
     <body>
     	<div id="wrapper">
         <h1>New Web Mesostic Poem</h1>
+       
+        <button id="basicbtn"> Basic </button> <button id="btn50"> 50% Mesostic </button> <button id="btn100"> 100% Mesostic </button>
+
         <label> Spine Word: </label>
-		<input type="text" name="spine" id ="spine" size="30" placeholder="PASTE"/>
+		<input type="text" name="spine" id ="spine" size="30" value="PASTE"/>
 		<br/>
-				<button class="goBtn"> Go </button>
-		<br/>
+
 		<div id="inputText">
 		<label> Seed Textual Input: </label> <br/>
 		<textarea rows="20" cols="60">Copy and paste text area for seed text </textarea>
 		</div>
 		<div id="poem">
 		<label> Mesostic </label> <br/>
-		<textarea rows="20" cols="60" readonly> </textarea>
+		<textarea rows="20" cols="30" readonly> </textarea>
 		</div>
 		<br/>
 		<br/>		
@@ -31,7 +33,9 @@
         </div>
 	  	<script type="text/javascript">
 	    $(function() {
-	    	var mv = new MesoView(new Mesostic( $('#spine').val() , $('div#inputText textarea').val() ));
+	    	var m = new Mesostic();
+	    	m.init($('#spine').val() , $('div#inputText textarea').val());
+	    	var mv = new MesoView(m);
 		    mv.init($('#wrapper')); 
 		});
 	  	</script>        

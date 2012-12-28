@@ -15,6 +15,15 @@ Mesostic.prototype.init = function(spine, seed) {
 	this.setSeed(seed);
 };
 
+Mesostic.prototype.reset = function(){
+	spineWord="";
+	seedText="";
+	this.poem=[];
+	this.textArr=[];
+	this.index = 0; // refers to place in seed text
+	this.spInd = -1; // refers to place in spine word	
+}
+
 Mesostic.prototype.setSpine = function(sp) {
     spineWord = sp;
 };
@@ -38,15 +47,18 @@ Mesostic.prototype.getWord = function(letter){
 	for (var i=0; i<this.textArr.length; i++){
 		if (patternStr.test(this.textArr[i])){
 				this.index = i+1;
-				var foundWord = this.textArr[i];
+				var foundWord = this.textArr[i].toLowerCase();
+				letter = letter.toLowerCase();
+				var ltrInd = foundWord.indexOf(letter);				
+				var fw = foundWord.substring(0, ltrInd) + foundWord[ltrInd].toUpperCase() + foundWord.substring(ltrInd+1);
 				this.textArr = this.textArr.slice(this.index);
-				return foundWord;
+				return fw;
 			}
 		else{
 			continue;
 		} 
 	}
-	return -1;// reached the end but there was no match
+	return 0;// reached the end but there was no match
 };
 
 Mesostic.prototype.getPureWord = function(letter){
@@ -73,11 +85,11 @@ Mesostic.prototype.getIndex = function(){
 
 Mesostic.prototype.makeNonPure = function(){
 	this.spInd++; 	
-	var found= this.getWord(this.getSpine().charAt(this.spInd))
+	var found= this.getWord(this.getSpine().charAt(this.spInd));
 	if (found !=0){
 		this.poem.push(found);	
-	}
-		if (this.poem.length < this.getSpine().length){
+		}
+	if (this.poem.length < this.getSpine().length){
 		this.makeNonPure();
 	}
 	else{
