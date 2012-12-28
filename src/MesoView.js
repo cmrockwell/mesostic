@@ -4,6 +4,7 @@
 
 var MesoView = function (mesostic) {
     this.mesostic = mesostic;
+    var spc = '&nbsp;';
 };
 
 MesoView.prototype.init = function (c) {
@@ -23,7 +24,7 @@ MesoView.prototype.init = function (c) {
 	$('button#basicbtn').click(function(){
 		mesoview.mesostic.reset();
 		mesoview.mesostic.init($('#spine').val() , $('div#inputText textarea').val());
-		alert(mesoview.mesostic.getSpine());
+		//alert(mesoview.mesostic.getSpine());
 		mesoview.mesostic.makeNonPure();
 		mesoview.display(); 		
 	});
@@ -35,8 +36,14 @@ MesoView.prototype.init = function (c) {
 
 MesoView.prototype.display = function(){
 	var poem ="";
+
 	for (var i=0; i<this.mesostic.poem.length; i++){
-		poem += this.mesostic.poem[i] + '\n';
+		// for each word, determine the number of spaces for spine word alignment
+		var space = "";
+		for(var s=0; s< (this.mesostic.maxIndexOfSpineLtr - this.mesostic.spineLtrs[i]); s++){
+			space +=" ";
+		}
+		poem += space+this.mesostic.poem[i] + '\n';
 	}
 	//$('div#poem textarea')
 	$('div#poem textarea').val(poem);

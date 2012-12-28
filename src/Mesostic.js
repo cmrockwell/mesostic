@@ -5,6 +5,8 @@ var Mesostic = function() {
 	var spineWord="";
 	var seedText="";
 	this.poem=[];
+	this.spineLtrs = [];
+    this.maxIndexOfSpineLtr =0;
 	this.textArr=[];
 	this.index = 0; // refers to place in seed text
 	this.spInd = -1; // refers to place in spine word
@@ -21,7 +23,9 @@ Mesostic.prototype.reset = function(){
 	this.poem=[];
 	this.textArr=[];
 	this.index = 0; // refers to place in seed text
-	this.spInd = -1; // refers to place in spine word	
+	this.spInd = -1; // refers to place in spine word
+	this.spineLtrs = [];
+    this.maxIndexOfSpineLtr =0;	
 }
 
 Mesostic.prototype.setSpine = function(sp) {
@@ -52,7 +56,12 @@ Mesostic.prototype.getWord = function(letter){
 				this.index = i+1;
 				var foundWord = this.textArr[i].toLowerCase();
 				letter = letter.toLowerCase();
-				var ltrInd = foundWord.indexOf(letter);				
+				var ltrInd = foundWord.indexOf(letter);
+				this.spineLtrs.push(ltrInd);	
+				if(ltrInd > this.maxIndexOfSpineLtr){
+					this.maxIndexOfSpineLtr = ltrInd;	
+				}	
+					
 				var fw = foundWord.substring(0, ltrInd) + foundWord[ltrInd].toUpperCase() + foundWord.substring(ltrInd+1);
 				this.textArr = this.textArr.slice(this.index);
 				return fw;
@@ -95,7 +104,7 @@ Mesostic.prototype.makeNonPure = function(){
 	if (this.poem.length < this.getSpine().length){
 		this.makeNonPure();
 	}
-	else{
+	else{ 
 		this.spInd=0;
 	}
 };

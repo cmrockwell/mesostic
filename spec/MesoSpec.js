@@ -61,4 +61,9 @@ describe('Mesostic Generator',function(){
 		expect(meso.poem.toString()).toEqual("mesostIc,iS, ,otHer,typogrAphy,That");
 	}); 
 	
+	it('has a has a max index', function(){
+		meso.makeNonPure(); 
+		expect(meso.maxIndexOfSpineLtr).toEqual(4);	
+	});
+	
 });
