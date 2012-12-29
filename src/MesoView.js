@@ -29,6 +29,22 @@ MesoView.prototype.init = function (c) {
 		mesoview.display(); 		
 	});
 	
+	$('button#btn50').click(function(){
+		mesoview.mesostic.reset();
+		mesoview.mesostic.init($('#spine').val() , $('div#inputText textarea').val());
+		//alert(mesoview.mesostic.getSpine());
+		mesoview.mesostic.makePure(50);
+		mesoview.display(); 		
+	});
+
+	$('button#btn100').click(function(){
+		mesoview.mesostic.reset();
+		mesoview.mesostic.init($('#spine').val() , $('div#inputText textarea').val());
+		//alert(mesoview.mesostic.getSpine());
+		mesoview.mesostic.makePure(100);
+		mesoview.display(); 		
+	});	
+
 	this.mesostic.makeNonPure();
 	this.display();
 	var mesoview = this;

@@ -49,7 +49,7 @@ describe('Mesostic Generator',function(){
 		expect(meso.poem.toString()).toEqual("meSostic,Poem,vertIcal,iNtersects,linEs");
 	});  
 
-	it('give a pure mesostic',function(){	
+	xit('give a pure mesostic',function(){	
 		meso.setSpine("SON");
 		meso.makePure(); 		
 		expect(meso.poem.toString()).toEqual("is,poem,intersects");
@@ -61,10 +61,16 @@ describe('Mesostic Generator',function(){
 		expect(meso.poem.toString()).toEqual("mesostIc,iS, ,otHer,typogrAphy,That");
 	}); 
 	
-	it('has a has a max index', function(){
+	it('has a max index', function(){
 		meso.setSpine("IS HAT");
 		meso.makeNonPure(); 
 		expect(meso.maxIndexOfSpineLtr).toEqual(6);	
 	});
+	
+	xit('has strings between spine letters', function(){
+		meso.setSpine("SPINE");
+		meso.makePure(); 
+		//expect(meso.).toEqual(6);	
+	});	
 	
 });
