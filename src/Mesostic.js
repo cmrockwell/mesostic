@@ -12,6 +12,8 @@ var Mesostic = function() {
 	this.index = 0; // refers to place in seed text
 	this.spInd = -1; // refers to place in spine word
 	var type = 'basic';
+	this.before ="";
+	this.after="";
 };
 
 Mesostic.prototype.init = function(spine, seed) {
@@ -83,7 +85,40 @@ Mesostic.prototype.getType = function(){
 	return type;
 };
 
-Mesostic.prototype.getPureWord = function(letter, nextLtr){
+Mesostic.prototype.getPureWord = function(ind){ // pass index number for reference to a spine letter
+	var letter = this.getSpine().charAt(ind);
+	var previous ="";
+	var next ="";
+	var ltrPtrn = new RegExp('[a-z]*'+letter+'[a-z]*','i'); 
+	var prevPtrn = /./; // dot matches all
+	var nextPtrn = /./; 
+	
+	if(ind<this.getSpine().length-1){ // not the last letter
+		next = this.getSpine().charAt(ind+1); 
+	}
+	
+	if(ind>0){ // not the first
+		previous = this.getSpine().charAt(ind-1);
+	}	
+	
+	if (letter ===' '){	 // preserve the spaces
+		this.spineLtrs.push(0);	
+		return letter;
+	}	
+	
+	for (var i=0; i<this.textArr.length; i++){// loop thru seed text 
+		if(ltrPtrn.test(this.textArr[i])){ // check if it has the letter
+			this.before = this.textArr[i].substing(0, ind); // before string, check it does NOT have the previous	
+			this.after = this.textArr[i].substing(ind+1); // after string, check it does NOT have the next				
+			}
+		}
+};
+	
+	
+	
+
+	
+	/*
 	regexCheckFor1 = new RegExp('([a-z]*'+ letter +'[a-z]*){1}','i'); // check ltr exists once or more
 	regexCheckFor2plus = new RegExp('([a-z]*'+letter+'[a-z]*){2}','i'); // check ltr exists twice or more	
 	//var regexCheckFor1 = /[a-z-']+/i; // any word
@@ -97,11 +132,11 @@ Mesostic.prototype.getPureWord = function(letter, nextLtr){
 		var regexCheckForNext1 = new RegExp('([a-z]*'+nextLtr+'[a-z]*){1}','i'); // check ltr exists once or more
 		var regexCheckForNext2plus = new RegExp('([a-z]*'+nextLtr+'[a-z]*){2}','i'); // check ltr exists twice or more
 	}*/
-	
+	/*
 	for (var i=0; i<this.textArr.length; i++){
 		if (regexCheckFor1.test(this.textArr[i]) && !regexCheckFor2plus.test(this.textArr[i])
-			/*&& regexCheckForNext1.test(this.textArr[i]) && !regexCheckForNext2plus.test(this.textArr[i]) */){				
-				this.index = i+1;
+			/*&& regexCheckForNext1.test(this.textArr[i]) && !regexCheckForNext2plus.test(this.textArr[i]) *///){				
+			/*	this.index = i+1;
 				var foundWord = this.textArr[i];
 				this.textArr = this.textArr.slice(this.index);
 				return foundWord;
@@ -110,8 +145,8 @@ Mesostic.prototype.getPureWord = function(letter, nextLtr){
 			continue;
 		} 
 	}
-	return 0;// reached the end but there was no match
-};
+	return 0;// reached the end but there was no match*/
+//};
 
 Mesostic.prototype.getIndex = function(){
 	return this.index;

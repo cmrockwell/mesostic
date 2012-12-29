@@ -28,33 +28,33 @@ describe('Mesostic Generator',function(){
 		meso.setSpine = 'OSTIC';
 		expect(meso.getPureWord('O')).toEqual("poem");
 	});  
-
-	it('the found word does not repeat spine letter in found word',function(){	 		
+//////////////////////
+	xit('the found word does not repeat spine letter in found word',function(){	 		
 		expect(meso.getPureWord('S')).toEqual("is");
 	});  
 	
-	it('gives an index of the next word in the seed text',function(){	
+	xit('gives an index of the next word in the seed text',function(){	
 		meso.getPureWord('S'); 		
 		expect(meso.getIndex()).toEqual(3);
 	});  
 	
-	it('reduces the seed text array elements that are before the found word',function(){	 				
+	xit('reduces the seed text array elements that are before the found word',function(){	 				
 		var len = meso.textArr.length;
 		meso.getPureWord('S'); 
 		expect(len).toEqual(meso.textArr.length+3);
 	});  
-		
+///////////////////////////////		
 	it('give a non pure mesostic',function(){	
 		meso.makeNonPure(); 		
 		expect(meso.poem.toString()).toEqual("meSostic,Poem,vertIcal,iNtersects,linEs");
 	});  
-
+/////////////////
 	xit('give a pure mesostic',function(){	
 		meso.setSpine("SON");
 		meso.makePure(); 		
 		expect(meso.poem.toString()).toEqual("is,poem,intersects");
 	});  
-
+///////////////////
 	it('can handle spaces',function(){	
 		meso.setSpine("IS HAT");
 		meso.makeNonPure(); 		
@@ -67,10 +67,11 @@ describe('Mesostic Generator',function(){
 		expect(meso.maxIndexOfSpineLtr).toEqual(6);	
 	});
 	
-	xit('has strings between spine letters', function(){
-		meso.setSpine("SPINE");
-		meso.makePure(); 
-		//expect(meso.).toEqual(6);	
-	});	
+	it('breaks the word into substrings before and after the spine letter', function(){
+		meso.type= '50';
+		meso.setSpine = "SOAP"
+		meso.getPureWord(1); 
+		expect(meso.before+" "+meso.after).toEqual("mes stic");	
+	});
 	
 });
