@@ -21,7 +21,7 @@ describe('Mesostic Generator',function(){
 	});
 	
 	it('finds the first word that contains a letter from the spine word',function(){	 		
-		expect(meso.getWord('S')).toEqual("meSostic");
+		expect(meso.getWord(0)).toEqual("meSostic");
 	});
 
 	xit('the found word does not have next spine letter in found word after current letter',function(){	 		
@@ -49,10 +49,10 @@ describe('Mesostic Generator',function(){
 		expect(meso.poem.toString()).toEqual("meSostic,Poem,vertIcal,iNtersects,linEs");
 	});  
 /////////////////
-	xit('give a pure mesostic',function(){	
+	it('give a pure mesostic',function(){	
 		meso.setSpine("SON");
 		meso.makePure(); 		
-		expect(meso.poem.toString()).toEqual("is,poem,intersects");
+		expect(meso.poem.toString()).toEqual("iS,pOem,iNtersects");
 	});  
 ///////////////////
 	it('can handle spaces',function(){	
@@ -67,11 +67,12 @@ describe('Mesostic Generator',function(){
 		expect(meso.maxIndexOfSpineLtr).toEqual(6);	
 	});
 	
-	it('breaks the word into substrings before and after the spine letter', function(){
+	it('breaks the word into 2 substrings; one before and one after the spine letter', function(){
 		meso.type= '50';
-		meso.setSpine = "SOAP"
+		meso.setSpine("SOAP");
 		meso.getPureWord(1); 
-		expect(meso.before+" "+meso.after).toEqual("mes stic");	
+		expect(meso.before+" "+meso.after).toEqual("p em");//
 	});
 	
+
 });
