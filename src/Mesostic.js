@@ -93,23 +93,23 @@ Mesostic.prototype.getType = function(){
 Mesostic.prototype.getPureWord = function(ind){ // pass index number for reference to a spine letter
 	
 	var letter = this.getSpine().charAt(ind);
-	var previous ="";
-	var next ="";
+	var previous =""; //spine letter
+	var next =""; //spine letter
 	var ltrPtrn = new RegExp('[a-z]*'+letter+'[a-z]*','i'); 
-	var prevPtrn = /[^a-z-']*/; // default pattern for first and last; matches no word
-	var nextPtrn = /[^a-z-']*/; // 
+	var prevPtrn = new RegExp('[^a-z-\']+','i');//[^a-z]*/i; // default pattern for first and last; matches no word
+	var nextPtrn = new RegExp('[^a-z-\']+','i');//[^a-z]*/i; // 
 
 	if (letter ===' '){	 // preserve the spaces
 		this.spineLtrs.push(0); //used for determining alignment	
 		return letter;
 	}	
 	
-	if(ind<this.getSpine().length-1 ){ // not the last letter, last does not hava next 
+	if(ind<this.getSpine().length-1 ){ // not the last spine letter, last does not have next 
 		next = this.getSpine().charAt(ind+1); 	
 		nextPtrn = new RegExp('[a-z]*'+next+'[a-z]*','i');	
 	}
 
-	if(ind>0){ // not the first letter. first does not hava previous 
+	if(ind>0){ // not the first spine letter. first does not have previous 
 		previous = this.getSpine().charAt(ind-1);
 		prevPtrn = new RegExp('[a-z]*'+previous+'[a-z]*','i');	
 	}
@@ -117,25 +117,28 @@ Mesostic.prototype.getPureWord = function(ind){ // pass index number for referen
 		
 	for (var i=0; i<this.textArr.length; i++){// loop thru seed text 
 		if(ltrPtrn.test(this.textArr[i]))  // contains the letter
-		{ // check if it has the letter
-			var fwInd = this.textArr[i].indexOf(letter);
-			if (fwInd<0){ 
+		{  		
+			var fwInd = this.textArr[i].indexOf(letter); // index of letter in found word
+			if (fwInd<0){ // if not found check lower case
 				fwInd = this.textArr[i].indexOf(letter.toLowerCase());}
 			
 			this.before = this.textArr[i].substring(0, fwInd); // before substring, check it does NOT have the previous letter	
+						// could be "" if found word begins with the spine letter
 			this.after = this.textArr[i].substring(fwInd +1); // after substring, check it does NOT have the next letter
-		/////////////// make switch statement?	
-			if(this.before.length===0 && this.after.length!==0){ // case for first letter
+			
+			if(this.before.length===0 && this.after.length!==0){ // found word begins with the spine letter
 				if(!nextPtrn.test(this.after)){
+					
 					return this.processFound(ind, this.textArr[i], i); //letterIndex, word, seedIndex
 				}
 			}
-			else if (this.after.length===0 && this.before.length!==0){ // last letter
+			else if (this.after.length===0 && this.before.length!==0){ // found word ends with the spine letter
 				if(!prevPtrn.test(this.before)){
 					return this.processFound(ind, this.textArr[i], i); //letterIndex, word, seedIndex
 				}				
 			}
 			else if (!prevPtrn.test(this.before) && !nextPtrn.test(this.after)){ // check middle letters
+				
 				// does NOT have the previous letter in the first part AND does NOT have the next letter in the second part
 				return this.processFound(ind, this.textArr[i], i); //letterIndex, word, seedIndex
 			}

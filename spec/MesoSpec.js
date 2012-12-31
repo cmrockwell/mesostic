@@ -16,6 +16,11 @@ describe('Mesostic Generator',function(){
 		expect(meso.getSpine()).toEqual("SPINE");
 	});
 
+	it('can have the spine word changed',function(){
+		meso.setSpine("OSTIC");	 		
+		expect(meso.getSpine()).toEqual("OSTIC");
+	});
+
 	it('has seed text', function() {
 		expect(meso.getSeed(1)).toEqual("mesostic");
 	});
@@ -24,11 +29,11 @@ describe('Mesostic Generator',function(){
 		expect(meso.getWord(0)).toEqual("meSostic");
 	});
 
-	xit('the found word does not have next spine letter in found word after current letter',function(){	 		
-		meso.setSpine = 'OSTIC';
-		expect(meso.getPureWord('O')).toEqual("poem");
+	it('current letter \'o\' next letter is \'s\', get pure word should not return a word with an \'s\' after the \'o\'',function(){	 		
+		meso.setSpine("OSTIC");
+		expect(meso.getPureWord(0)).toEqual("pOem"); //not 'mesOstic' (1st), not 'Or' (3rd)
 	});  
-//////////////////////
+/////////////////////DISABLED
 	xit('the found word does not repeat spine letter in found word',function(){	 		
 		expect(meso.getPureWord('S')).toEqual("is");
 	});  
@@ -48,13 +53,13 @@ describe('Mesostic Generator',function(){
 		meso.makeNonPure(); 		
 		expect(meso.poem.toString()).toEqual("meSostic,Poem,vertIcal,iNtersects,linEs");
 	});  
-/////////////////
+
 	it('give a pure mesostic',function(){	
 		meso.setSpine("SON");
 		meso.makePure(); 		
 		expect(meso.poem.toString()).toEqual("iS,pOem,iNtersects");
 	});  
-///////////////////
+
 	it('can handle spaces',function(){	
 		meso.setSpine("IS HAT");
 		meso.makeNonPure(); 		
