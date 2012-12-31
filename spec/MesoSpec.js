@@ -73,11 +73,17 @@ describe('Mesostic Generator',function(){
 	});
 	
 	it('breaks the word into 2 substrings; one before and one after the spine letter', function(){
-		meso.type= '50';
+		meso.type= '100';
 		meso.setSpine("SOAP");
 		meso.getPureWord(1); 
 		expect(meso.before+" "+meso.after).toEqual("p em");//
 	});
-	
+
+	it('breaks the word into 2 substrings; one before and one after the spine letter', function(){
+		meso.type= '50';
+		meso.setSpine("SOAP");
+		meso.getPureWord(1); 
+		expect(meso.before+" "+meso.after).toEqual("mes stic");//
+	});	
 
 });
