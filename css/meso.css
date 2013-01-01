@@ -6,9 +6,20 @@ body{
 	font-size: 1em;
 }
 
-h1 {font-size: 1.75em; font-weight:  bold; font-variant: small-caps; letter-spacing: .25em; margin: 0;} /*change 3 h1 font size text-align: center;*/
+h1 {font-size: 1.50em; font-weight:  bold; font-variant: small-caps; letter-spacing: .25em; margin: 0;} /*change 3 h1 font size text-align: center;*/
 
-#wrapper {margin: 20px; border: 0px solid #000; margin: 10px;} /*auto width: 1000px;*/
+p {font-size: 1.00em; font-weight:  normal; font-variant: small-caps; letter-spacing: .1em; margin: 0;} 
+
+
+label {font-size: 1.00em; font-weight:  normal; font-variant: small-caps; letter-spacing: .1em; margin: 0;} 
+
+button {/*font-size: 0.75em; font-weight:  normal; font-variant: small-caps; letter-spacing: .1em; margin: 0;
+font:italic bold 12px/30px Georgia, serif;*/
+		font: 0.75em monospace;} 
+
+#wrapper{ 	margin: 20px; 
+			border: 0px solid #000; 
+			margin: 10px; width: 100%; overflow: auto;} /*auto width: 1000px;	overflow: auto; width: 100%*/
 
 #poem {display:inline; float: left; }
 
