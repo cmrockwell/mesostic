@@ -31,6 +31,7 @@ describe('Mesostic Generator',function(){
 
 	it('current letter \'o\' next letter is \'s\', get pure word should not return a word with an \'s\' after the \'o\'',function(){	 		
 		meso.setSpine("OSTIC");
+		meso.type='50';
 		expect(meso.getPureWord(0)).toEqual("pOem"); //not 'mesOstic' (1st), not 'Or' (3rd)
 	});  
 /////////////////////DISABLED
@@ -56,7 +57,7 @@ describe('Mesostic Generator',function(){
 
 	it('give a pure mesostic',function(){	
 		meso.setSpine("SON");
-		meso.makePure(); 		
+		meso.makePure(50); 		
 		expect(meso.poem.toString()).toEqual("iS,pOem,iNtersects");
 	});  
 
@@ -72,18 +73,31 @@ describe('Mesostic Generator',function(){
 		expect(meso.maxIndexOfSpineLtr).toEqual(6);	
 	});
 	
-	it('breaks the word into 2 substrings; one before and one after the spine letter', function(){
+	it('breaks the word into 2 substrings; one before \'p\' and one after \' em\' the spine letter', function(){
 		meso.type= '100';
 		meso.setSpine("SOAP");
 		meso.getPureWord(1); 
 		expect(meso.before+" "+meso.after).toEqual("p em");//
 	});
 
-	it('breaks the word into 2 substrings; one before and one after the spine letter', function(){
+	it('breaks the word into 2 substrings; one before \'mes\' and one after \'stic\' the spine letter', function(){
 		meso.type= '50';
-		meso.setSpine("SOAP");
+		meso.setSpine("POAM");
 		meso.getPureWord(1); 
 		expect(meso.before+" "+meso.after).toEqual("mes stic");//
 	});	
+
+	it('type 100 does not repeat the current spine letter' , function(){
+		meso.type= '100';
+		meso.setSpine("SUPER");
+		expect(meso.getPureWord(0)).toEqual("iS"); 		
+	});
+	
+	it('type 50 can repeat the current spine letter' , function(){
+		meso.type= '50';
+		meso.setSpine("SUPER");
+		expect(meso.getPureWord(0)).toEqual("meSostic"); 		
+	});
+
 
 });

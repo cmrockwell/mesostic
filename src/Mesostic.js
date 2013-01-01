@@ -95,9 +95,11 @@ Mesostic.prototype.getPureWord = function(ind){ // pass index number for referen
 	var letter = this.getSpine().charAt(ind);
 	var previous =""; //spine letter
 	var next =""; //spine letter
-	var ltrPtrn = new RegExp('[a-z]*'+letter+'[a-z]*','i'); 
-	var prevPtrn = new RegExp('[^a-z-\']+','i');//[^a-z]*/i; // default pattern for first and last; matches no word
-	var nextPtrn = new RegExp('[^a-z-\']+','i');//[^a-z]*/i; // 
+	var ltrPtrn = new RegExp('([a-z]*'+letter+'[a-z]*){1}','i'); 
+	var ltrPtrnCheckFor2Plus = new RegExp('([a-z]*'+letter+'[a-z]*){2}','i'); 
+	
+	var prevPtrn = new RegExp('[^a-z-\']+','i');// default pattern for first and last; matches no word
+	var nextPtrn = new RegExp('[^a-z-\']+','i');
 
 	if (letter ===' '){	 // preserve the spaces
 		this.spineLtrs.push(0); //used for determining alignment	
@@ -105,20 +107,20 @@ Mesostic.prototype.getPureWord = function(ind){ // pass index number for referen
 	}	
 	
 	if(ind<this.getSpine().length-1 ){ // not the last spine letter, last does not have next 
-		next = this.getSpine().charAt(ind+1); 	
-		nextPtrn = new RegExp('[a-z]*'+next+'[a-z]*','i');	
+		next = this.getSpine().charAt(ind+1); 
+		nextPtrn = new RegExp('[a-z]*'+next+'[a-z]*','i');		
 	}
 
 	if(ind>0){ // not the first spine letter. first does not have previous 
 		previous = this.getSpine().charAt(ind-1);
-		if (this.type =='100'){
+		prevPtrn = new RegExp('[a-z]*'+previous+'[a-z]*','i'); //
+		/*if (this.type =='100'){
 			prevPtrn = new RegExp('[a-z]*'+previous+'[a-z]*','i');		
 		}
 		else if (this.type =='50'){
-			prevPtrn = new RegExp('[a-z]*'+next+'[a-z]*','i');
-		}
+			prevPtrn = new RegExp('[a-z]*'+next+'[a-z]*','i'); //
+		}*/
 	}
-	//alert(previous+" "+letter+" "+next); // S O A
 		
 	for (var i=0; i<this.textArr.length; i++){// loop thru seed text 
 		if(ltrPtrn.test(this.textArr[i]))  // contains the letter
@@ -133,19 +135,38 @@ Mesostic.prototype.getPureWord = function(ind){ // pass index number for referen
 			
 			if(this.before.length===0 && this.after.length!==0){ // found word begins with the spine letter
 				if(!nextPtrn.test(this.after)){
+					////////////////RETURN TO DO  if type 100 and letter not present more than once
 					
-					return this.processFound(ind, this.textArr[i], i); //letterIndex, word, seedIndex
+					if (this.type=='100' && !ltrPtrnCheckFor2Plus.test(this.textArr[i])){ // if its 100% and word does not contain letter 2 or more times
+						return this.processFound(ind, this.textArr[i], i); //letterIndex, word, seedIndex
+						
+					}
+					else if (this.type=='50'){return this.processFound(ind, this.textArr[i], i); }
 				}
 			}
 			else if (this.after.length===0 && this.before.length!==0){ // found word ends with the spine letter
 				if(!prevPtrn.test(this.before)){
-					return this.processFound(ind, this.textArr[i], i); //letterIndex, word, seedIndex
+					if(!nextPtrn.test(this.after)){
+						
+						////////////////RETURN TO DO  if type 100 and letter not present more than once
+						if (this.type=='100' && !ltrPtrnCheckFor2Plus.test(this.textArr[i])){ 
+							return this.processFound(ind, this.textArr[i], i); //letterIndex, word, seedIndex
+						}
+						else if (this.type=='50'){return this.processFound(ind, this.textArr[i], i); }
+					}
 				}				
 			}
 			else if (!prevPtrn.test(this.before) && !nextPtrn.test(this.after)){ // check middle letters
 				
 				// does NOT have the previous letter in the first part AND does NOT have the next letter in the second part
-				return this.processFound(ind, this.textArr[i], i); //letterIndex, word, seedIndex
+				if(!nextPtrn.test(this.after)){
+					
+					////////////////RETURN TO DO  if type 100 and letter not present more than once
+					if (this.type=='100' && !ltrPtrnCheckFor2Plus.test(this.textArr[i])){ 
+						return this.processFound(ind, this.textArr[i], i); //letterIndex, word, seedIndex						
+					}
+					else if (this.type=='50'){return this.processFound(ind, this.textArr[i], i); }
+				}
 			}
 			else{
 				continue;
@@ -158,7 +179,7 @@ Mesostic.prototype.getPureWord = function(ind){ // pass index number for referen
 Mesostic.prototype.getIndex = function(){
 	return this.index;
 };
-////////////combine makeNonPure and makePure ?? 
+
 Mesostic.prototype.makeNonPure = function(){// todo: move the mesostic engine to another method.  
 	this.spInd++; 	
 	this.type = 'basic';
