@@ -98,6 +98,12 @@ describe('Mesostic Generator',function(){
 		meso.setSpine("SUPER");
 		expect(meso.getPureWord(0)).toEqual("meSostic"); 		
 	});
-
+//call me ishmael
+	it('type 50 can have previous spine letter in the before substring' , function(){
+		meso.setSpine("call me ishmael");
+		meso.type= '50';
+		expect(meso.getPureWord(2)).toEqual("verticaL"); 		
+	});
+//call me 
 
 });

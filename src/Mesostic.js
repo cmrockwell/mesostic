@@ -113,13 +113,13 @@ Mesostic.prototype.getPureWord = function(ind){ // pass index number for referen
 
 	if(ind>0){ // not the first spine letter. first does not have previous 
 		previous = this.getSpine().charAt(ind-1);
-		prevPtrn = new RegExp('[a-z]*'+previous+'[a-z]*','i'); //
-		/*if (this.type =='100'){
-			prevPtrn = new RegExp('[a-z]*'+previous+'[a-z]*','i');		
+		//prevPtrn = new RegExp('[a-z]*'+previous+'[a-z]*','i'); //
+		if (this.type =='100'){
+			prevPtrn = new RegExp('[a-z]*('+previous+'|'+letter+')[a-z]*','i');		
 		}
 		else if (this.type =='50'){
-			prevPtrn = new RegExp('[a-z]*'+next+'[a-z]*','i'); //
-		}*/
+			prevPtrn = new RegExp('[a-z]*'+letter+'[a-z]*','i'); //
+		}
 	}
 		
 	for (var i=0; i<this.textArr.length; i++){// loop thru seed text 
