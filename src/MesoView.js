@@ -50,17 +50,22 @@ MesoView.prototype.init = function (c) {
 	$('a#getseed').click(function(e){
 		e.preventDefault(); //str.replace(/[^\w\s]|_/g, function ($1) { return ' ' + $1 + ' ';}).replace(/[ ]+/g, ' ').split(' ');
 		extract="";
-		var words = mesoview.mesostic.getSpine().replace(/(\s+|[^\w]+)/g, function($1){return " ";}).split(' '); // make array of just words
-		alert(words);
+		mesoview.words = mesoview.mesostic.getSpine().replace(/(\s+|[^\w]+)/g, function($1){return " ";}).split(' '); // make array of just words
+		mesoview.wordIndex =0;
+		//alert(mesoview.words);
 		//for (var i=0; i<words.length; i++){
 		$.ajax({
-  			url: "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles="+words[0]+"&format=json&redirects",
+  			url: "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles="+mesoview.words[0]+"&format=json&redirects",
   			type: 'GET',
   			dataType: "jsonp",
 	    	jsonp : "callback",
 	    	jsonpCallback: "jsonpcallback"
 	    	}).success(function() {
-  				alert( "updated seed from wikipedia" );});	
+  				alert( "updated seed from wikipedia" );
+  				mesoview.wordIndex++;
+  				if(mesoview.words[mesoview.wordIndex])
+  					{startAjax(mesoview.words[mesoview.wordIndex]);}
+  				});	
 		//}
 	});						
 
@@ -94,7 +99,7 @@ function jsonpcallback(rtndata){
 
 function startAjax(word){
 	$.ajax({
-  		url: "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles="+word+"&format=json",
+  		url: "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles="+word+"&format=json&redirects",
   		type: 'GET',
   		dataType: "jsonp",
 	    jsonp : "callback",
