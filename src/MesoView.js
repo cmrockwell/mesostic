@@ -11,9 +11,11 @@ var MesoView = function (mesostic) {
 
 MesoView.prototype.init = function (c) {
 	
-	//var wrapper = $(c);
+	this.mesostic.makeNonPure();
+	this.display();
+	var mesoview = this;
 	
-	/*$('textarea').focus(function(){
+	/*$('textarea').focus(function(){ // in case the spine text should be cleared on the first focus
  		$(this).empty();
 	});*/
 
@@ -46,18 +48,21 @@ MesoView.prototype.init = function (c) {
 	});	
 	
 	$('a#getseed').click(function(e){
-		e.preventDefault();
+		e.preventDefault(); //str.replace(/[^\w\s]|_/g, function ($1) { return ' ' + $1 + ' ';}).replace(/[ ]+/g, ' ').split(' ');
+		extract="";
+		var words = mesoview.mesostic.getSpine().replace(/(\s+|[^\w]+)/g, function($1){return " ";}).split(' '); // make array of just words
+		alert(words);
+		//for (var i=0; i<words.length; i++){
 		$.ajax({
-  			url: "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles="+mesoview.mesostic.getSpine+"&format=json",
+  			url: "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles="+words[0]+"&format=json&redirects",
   			type: 'GET',
   			dataType: "jsonp",
 	    	jsonp : "callback",
-	    	jsonpCallback: "jsonpcallback",}).success(function() {
+	    	jsonpCallback: "jsonpcallback"
+	    	}).success(function() {
   				alert( "updated seed from wikipedia" );});	
-	});
-	this.mesostic.makeNonPure();
-	this.display();
-	var mesoview = this;
+		//}
+	});						
 
 }
 
@@ -76,9 +81,10 @@ MesoView.prototype.display = function(){
 	$('div#poem textarea').val(poem);
 	
 }
+var extract="";
 
 function jsonpcallback(rtndata){
-	var extract="";
+	//var extract="";
 	for (var i in rtndata.query.pages) {
     	console.log(rtndata.query.pages[i].extract); 
     	extract += rtndata.query.pages[i].extract;
@@ -86,17 +92,16 @@ function jsonpcallback(rtndata){
 	$('div#inputText textarea').val(extract);
 }
 
-function startAjax(){
+function startAjax(word){
 	$.ajax({
-  		url: "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles="+mesoview.mesostic.getSpine()+"&format=json",
+  		url: "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles="+word+"&format=json",
   		type: 'GET',
   		dataType: "jsonp",
 	    jsonp : "callback",
 	    jsonpCallback: "jsonpcallback",
-	        //userAgent: "stu.wccnet.edu/~cmrockwell/mesostic"
-  			//data: { action: "query&prop=extracts&exintro&explaintext", titles: "mesostic", format:'json' }
+
 	}).success(function() {
-  		alert("blen");
+		// nothing yet
 	});	
 }
 
