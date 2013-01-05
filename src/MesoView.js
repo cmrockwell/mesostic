@@ -5,20 +5,20 @@
 var MesoView = function (mesostic) {
     this.mesostic = mesostic;
     var spc = '&nbsp;';
+    $.support.cors = true;
 };
+
 
 MesoView.prototype.init = function (c) {
 	
 	//var wrapper = $(c);
 	
-	$('textarea').focus(function(){
+	/*$('textarea').focus(function(){
  		$(this).empty();
-	});
+	});*/
 
-	$('input#spine').focus(function(){
- 		if ($(this).val()==='try to create'){
- 			$(this).val('');
- 		}
+	$('input#spine').blur(function(){
+		mesoview.mesostic.setSpine($('input#spine').val());		
 	});
 	
 	$('button#basicbtn').click(function(){
@@ -44,10 +44,21 @@ MesoView.prototype.init = function (c) {
 		mesoview.mesostic.makePure(100);
 		mesoview.display(); 		
 	});	
-
+	
+	$('a#getseed').click(function(e){
+		e.preventDefault();
+		$.ajax({
+  			url: "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles="+mesoview.mesostic.getSpine+"&format=json",
+  			type: 'GET',
+  			dataType: "jsonp",
+	    	jsonp : "callback",
+	    	jsonpCallback: "jsonpcallback",}).success(function() {
+  				alert( "updated seed from wikipedia" );});	
+	});
 	this.mesostic.makeNonPure();
 	this.display();
 	var mesoview = this;
+
 }
 
 MesoView.prototype.display = function(){
@@ -65,6 +76,30 @@ MesoView.prototype.display = function(){
 	$('div#poem textarea').val(poem);
 	
 }
+
+function jsonpcallback(rtndata){
+	var extract="";
+	for (var i in rtndata.query.pages) {
+    	console.log(rtndata.query.pages[i].extract); 
+    	extract += rtndata.query.pages[i].extract;
+	}
+	$('div#inputText textarea').val(extract);
+}
+
+function startAjax(){
+	$.ajax({
+  		url: "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles="+mesoview.mesostic.getSpine()+"&format=json",
+  		type: 'GET',
+  		dataType: "jsonp",
+	    jsonp : "callback",
+	    jsonpCallback: "jsonpcallback",
+	        //userAgent: "stu.wccnet.edu/~cmrockwell/mesostic"
+  			//data: { action: "query&prop=extracts&exintro&explaintext", titles: "mesostic", format:'json' }
+	}).success(function() {
+  		alert("blen");
+	});	
+}
+
 
 window.MesoView = MesoView;
  
