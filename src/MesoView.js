@@ -5,6 +5,7 @@
 var MesoView = function (mesostic) {
     this.mesostic = mesostic;
     var spc = '&nbsp;';
+    var wrapper ={};
     $.support.cors = true;
 };
 
@@ -14,7 +15,7 @@ MesoView.prototype.init = function (c) {
 	this.mesostic.makeNonPure();
 	this.display();
 	var mesoview = this;
-	
+	wrapper = c;
 	/*$('textarea').focus(function(){ // in case the spine text should be cleared on the first focus
  		$(this).empty();
 	});*/
@@ -52,23 +53,91 @@ MesoView.prototype.init = function (c) {
 		extract="";
 		mesoview.words = mesoview.mesostic.getSpine().replace(/(\s+|[^\w]+)/g, function($1){return " ";}).split(' '); // make array of just words
 		mesoview.wordIndex =0;
-		//alert(mesoview.words);
-		//for (var i=0; i<words.length; i++){
+
+		mesoview.showSeedForm();
+		
 		$.ajax({
   			url: "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles="+mesoview.words[0]+"&format=json&redirects",
   			type: 'GET',
   			dataType: "jsonp",
 	    	jsonp : "callback",
 	    	jsonpCallback: "jsonpcallback"
-	    	}).success(function() {
-  				alert( "updated seed from wikipedia" );
+	    	}).success(function() {// runs after the named call back
   				mesoview.wordIndex++;
   				if(mesoview.words[mesoview.wordIndex])
   					{startAjax(mesoview.words[mesoview.wordIndex]);}
   				});	
-		//}
+		
 	});						
+		
+}
 
+MesoView.prototype.showSeedForm = function(){
+	var headerHtml = "<h1>Generate Seed Form</h1>	<p>Generate seed text by entering a search phrase below.</p>";
+	var formHtml = "<form id=\"getSeedForm\" > <label>Search Phrase: </label>" +
+	"<input type=\"text\" name=\"wordphrase\" id=\"wordphrase\" \"/> "+ 	
+	"<button type=\"submit\" id=\"getphrase\" name=\"getphrase\">Get Extract for Phrase</button> </form> "+
+ 	"<p>Or, you can search using the spine words.</p>"+
+ 	"<form id=\"getSpine\"> <button type=\"submit\" id=\"getword\" name=\"getword\">Get Extract from Spine Words</button></form>" +
+ 	"<form id=\"cancel\"> <button type=\"submit\" id=\"cancel\" name=\"cancel\">Cancel</button> </form>";
+ 	var getSeedElement = $(headerHtml+formHtml);
+ 	var maskDiv = $('<div id="mask" height="'+ wrapper.offsetHeight+'" width="'+wrapper.offsetWidth+'">' +'</div>');
+ 	var getSeedDiv = $('<div id="getSeedDiv"></div>');
+ 	getSeedDiv.append(headerHtml);
+ 	getSeedDiv.append(formHtml);	
+ 	wrapper.append(maskDiv);
+ 	wrapper.append(getSeedDiv);
+ 	
+ 	$('button#getphrase').click(function(e){
+ 		e.preventDefault();
+ 	});
+ 	
+ 	$('button#getword').click(function(e){
+ 		e.preventDefault();
+ 	});
+ 	
+ 	$('button#cancel').click(function(e){
+ 		e.preventDefault();
+ 		var seedEle = document.getElementById('getSeedDiv');
+ 		var maskEle = document.getElementById('mask');
+ 		seedEle.parentNode.removeChild(seedEle);
+ 		maskEle.parentNode.removeChild(maskEle);
+ 	});
+}
+
+MesoView.prototype.setDefault = function(){
+	// maybe ajax calls do not work over localhost.
+	//alert("http://localhost/mesostic_back_end/classes/Mesostics.php?id="+this.urlParams['id']);
+	
+	//Core.sendRequest('classes/Books.php',obj.authorResults, input);
+	Core.sendRequest('http://localhost/mesostic_back_end/classes/Mesostics.php?id='+this.urlParams['id'],defaultCallBack);
+	/*$.ajax({  		
+  		url: "http://localhost/mesostic_back_end/classes/Mesostics.php?id="+this.urlParams['id'],
+  		type: 'GET',
+  		dataType: "jsonp",
+	    jsonpCallback: "defaultCallBack",
+
+	}).success(function() {
+		var json = JSON.parse(JSON.parse(resp.responseText));
+		alert('test');
+
+		mesoview.mesostic.reset();
+		mesoview.mesostic.init(json['poems']['spine'] , json['poems']['seed'] );
+	/*});//*/		
+}
+
+MesoView.prototype.getParams = function(){
+	this.urlParams = {};
+	var match;
+	var plus = /\+/g;  // Regex for replacing addition symbol with a space
+   	var search = /([^&=]+)=?([^&]*)/g;
+   	var decode = function (string) { return decodeURIComponent(string.replace(plus, " ")); };
+   	var query  = window.location.search.substring(1);
+	//alert(query);
+   	while (match = search.exec(query))
+		{
+			this.urlParams[decode(match[1])] = decode(match[2]);
+		}
 }
 
 MesoView.prototype.display = function(){
@@ -87,6 +156,14 @@ MesoView.prototype.display = function(){
 	
 }
 var extract="";
+
+function defaultCallBack(response){
+	var json = JSON.parse(response.responseText);
+	alert(json[0]['spine']);
+	console.log(json);
+	$('#spine').val(json[0]['spine']);
+	$('#seed').val(json[0]['seed']);
+}
 
 function jsonpcallback(rtndata){
 	//var extract="";

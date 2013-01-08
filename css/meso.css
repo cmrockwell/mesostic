@@ -27,6 +27,62 @@ font:italic bold 12px/30px Georgia, serif;*/
 
 #inputText {display:inline; float: left;}
 
-button,input {clear:both; margin: 10px 10px 10px 0px;}
+button,input {clear:both; margin: 10px 10px 10px 0px; padding: 4px 2px;}
 
 .text {width: 45%;}
+
+
+#mask{
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 301;
+	opacity: 0.5; 	
+	background-color: #F9B7FF; /* plum1 */
+	height: 100%;
+	width: 100%;
+	/*background-image: url('../images/transparent.gif');*/
+}
+
+#getSeedDiv {
+	position: absolute;
+	/*width: 400px;*/
+	/*margin-top: 15%;*/
+	margin-left: 2%;
+	z-index: 400;
+	padding: 14px;
+	background-color: white;
+	border: 2px solid black;
+	opacity: 1.0;
+}
+
+
+#getSeedForm input {
+	/*float:left;*/
+	font-size:12px;
+	padding:4px 2px;
+	border:solid 1px #aacfe4;
+	width:200px;
+	margin:2px 0 20px 10px;
+}
+
+#getSeedForm label {
+	/*display:block;*/
+	font-weight:bold;
+	text-align:right;
+	width:140px;
+	/*float:left;*/
+	font-size:12px;
+}
+#getSeedDiv h1 {
+	font-size:14px;
+	font-weight:bold;
+	margin-bottom:8px;
+}
+#getSeedDiv p{
+	font-size:11px;
+	color:#666666;
+	/*margin-bottom:20px;*/
+	border-bottom:solid 1px #b7ddf2;
+	padding-bottom:5px;
+	}

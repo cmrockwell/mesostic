@@ -4,6 +4,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Mesostic</title>
         <link href="css/meso.css" rel="stylesheet" />
+        <script type="text/javascript" src="lib/core-event-listeners.js"></script>
+        <script type="text/javascript" src="lib/core-ajax.js"></script>
 		<script type="text/javascript" src="lib/jquery.js"></script>
 		<script type="text/javascript" src="src/Mesostic.js"></script>
 		<script type="text/javascript" src="src/MesoView.js"></script>        
@@ -12,15 +14,19 @@
     	<div id="wrapper">
         <h1>Supply Seed and Spine for a<br>Mesostic Typography</h1>
        
-        <button id="basicbtn"> Basic </button> <button id="btn50"> 50% Mesostic </button> <button id="btn100"> 100% Mesostic </button>
+        <button id="basicbtn" title="Basic mesostic imposes the fewest restrictions when matching words from the seed text."> Basic </button> 
+        <button id="btn50" title="50% mesostics cannot have the second letter between any two capitalized"> 50% Mesostic </button> 
+        <button id="btn100" title="100% mesostics cannot have the either letter between any two capitalized"> 100% Mesostic </button>
 
         <label> Spine Word: </label>
-		<input type="text" name="spine" id ="spine" size="30" value="mesostic"/>
+		<input type="text" name="spine" id ="spine" size="30" value="mesostic" 
+		title="The spine word or phrase runs down the middle of the mesostic. The letters are used to select words from the seed text."/>
 		<br/>
 
 		<div id="inputText">
-		<label> Seed Text: </label> <a href="" id="getseed">Get Seed Text</a><br/>
-		<textarea rows="20" cols="60">A mesostic is a poem or other typography such that a vertical phrase intersects lines of horizontal text. It is similar to an acrostic, but with the vertical phrase intersecting the middle of the line, as opposed to beginning each new line.
+		<label> Seed Text: </label> <a href="" id="getseed" title="gets abstracts from Wikipedia matching the first 2 spine words">Get Seed Text</a><br/>
+		<textarea rows="20" cols="60" title="Paste seed text here. Or select 'Get Seed Text' to insert it from Wikipedia">
+A mesostic is a poem or other typography such that a vertical phrase intersects lines of horizontal text. It is similar to an acrostic, but with the vertical phrase intersecting the middle of the line, as opposed to beginning each new line.
 The practice of using index words to select pieces from a preexisting text was developed by Jackson Mac Low as "diastics". It was used extensively by the experimental composer John Cage (Walsh 2001).
 There are two types of mesostic: fifty percent and one hundred percent. In a fifty-percent mesostic, according to Andrew Culver (John Cage's assistant), "Between any two [capitalized] letters, you can't have the second [letter]." 
 In a one-hundred-percent mesostic, "Between any two [capitalized] letters, you can't have either [letter]." 
@@ -29,7 +35,7 @@ Below, an example of a one-hundred-percent mesostic:
 		</div>
 		<div id="poem">
 		<label> Mesostic </label> <br/>
-		<textarea rows="20" cols="30" readonly> </textarea>
+		<textarea rows="20" cols="30" readonly title="Your mesostic!"> </textarea>
 		</div>
 		
 		<br/>
