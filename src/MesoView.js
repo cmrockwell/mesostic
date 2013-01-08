@@ -7,14 +7,19 @@ var MesoView = function (mesostic) {
     var spc = '&nbsp;';
     var wrapper ={};
     $.support.cors = true;
+    extract="";
+        
 };
 
 
 MesoView.prototype.init = function (c) {
+	// get the default textbox values via ajax call
+	this.getParams();
+	this.setDefault();
 	
-	this.mesostic.makeNonPure();
-	this.display();
-	var mesoview = this;
+	//this.mesostic.makeNonPure();
+	//this.display();
+	mesoview = this;
 	wrapper = c;
 	/*$('textarea').focus(function(){ // in case the spine text should be cleared on the first focus
  		$(this).empty();
@@ -110,12 +115,16 @@ MesoView.prototype.setDefault = function(){
 	//alert("http://localhost/mesostic_back_end/classes/Mesostics.php?id="+this.urlParams['id']);
 	
 	//Core.sendRequest('classes/Books.php',obj.authorResults, input);
-	Core.sendRequest('http://localhost/mesostic_back_end/classes/Mesostics.php?id='+this.urlParams['id'],defaultCallBack);
+	var idParm = "0";
+	if(this.urlParams['id']!=null){
+		idParm= this.urlParams['id'];
+		}
+	Core.sendRequest('http://localhost/mesostic_back_end/classes/Mesostics.php?id='+idParm,defaultCallBack);
 	/*$.ajax({  		
   		url: "http://localhost/mesostic_back_end/classes/Mesostics.php?id="+this.urlParams['id'],
   		type: 'GET',
   		dataType: "jsonp",
-	    jsonpCallback: "defaultCallBack",
+	    jsonpCallback: "mesoview.defaultCallBack",
 
 	}).success(function() {
 		var json = JSON.parse(JSON.parse(resp.responseText));
@@ -123,7 +132,8 @@ MesoView.prototype.setDefault = function(){
 
 		mesoview.mesostic.reset();
 		mesoview.mesostic.init(json['poems']['spine'] , json['poems']['seed'] );
-	/*});//*/		
+	/*});//*/	
+
 }
 
 MesoView.prototype.getParams = function(){
@@ -155,14 +165,19 @@ MesoView.prototype.display = function(){
 	$('div#poem textarea').val(poem);
 	
 }
-var extract="";
-
-function defaultCallBack(response){
-	var json = JSON.parse(response.responseText);
-	alert(json[0]['spine']);
-	console.log(json);
-	$('#spine').val(json[0]['spine']);
-	$('#seed').val(json[0]['seed']);
+///////////this does not seem right. I wanted this function part of the mesoview prototype. but it didn't work with the parameter req.
+function defaultCallBack(req){//response
+	var json = JSON.parse(req.responseText);
+	var seedDecoded = decodeURIComponent(json[0]['seed']);
+	var spineDecoded = decodeURIComponent(json[0]['spine']); 
+	
+	$('#spine').val(spineDecoded);
+	$('div#inputText textarea').val(seedDecoded);
+	
+	mesoview.mesostic.reset();
+	mesoview.mesostic.init(spineDecoded, seedDecoded);
+	mesoview.mesostic.makeNonPure();
+	mesoview.display();	
 }
 
 function jsonpcallback(rtndata){

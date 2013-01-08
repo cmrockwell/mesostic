@@ -75,6 +75,7 @@ Mesostic.prototype.getWord = function(ind){
 	
 	var patternStr = new RegExp('[a-z]*'+letter+'[a-z]*','i'); 
 	
+	
 	for (var i=0; i<this.textArr.length; i++){// loop thru seed text 
 		if (patternStr.test(this.textArr[i])){  // find next word from seed text that matches pattern
 			return this.processFound(ind, this.textArr[i], i); //letterIndex, word, seedIndex
@@ -83,7 +84,7 @@ Mesostic.prototype.getWord = function(ind){
 			continue;
 		} 
 	}
-	return 0;// reached the end but there was no match
+	//return 0;// reached the end but there was no match
 };
 
 Mesostic.prototype.getType = function(){
