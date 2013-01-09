@@ -61,7 +61,7 @@ MesoView.prototype.init = function (c) {
 
 		mesoview.showSeedForm();
 		
-		$.ajax({
+		/*$.ajax({
   			url: "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles="+mesoview.words[0]+"&format=json&redirects",
   			type: 'GET',
   			dataType: "jsonp",
@@ -71,7 +71,7 @@ MesoView.prototype.init = function (c) {
   				mesoview.wordIndex++;
   				if(mesoview.words[mesoview.wordIndex])
   					{startAjax(mesoview.words[mesoview.wordIndex]);}
-  				});	
+  				});*/	
 		
 	});						
 		
@@ -95,19 +95,39 @@ MesoView.prototype.showSeedForm = function(){
  	
  	$('button#getphrase').click(function(e){
  		e.preventDefault();
+ 		var phrase = encodeURIComponent($('#wordphrase').val()); 
+ 		startAjax(phrase);
+ 		mesoview.closeSeedView();
  	});
  	
  	$('button#getword').click(function(e){
  		e.preventDefault();
+ 		startAjax(mesoview.words.shift(), true);
+ 		mesoview.closeSeedView();
+ 		/*$.ajax({
+  			url: "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles="+mesoview.words[0]+"&format=json&redirects",
+  			type: 'GET',
+  			dataType: "jsonp",
+	    	jsonp : "callback",
+	    	jsonpCallback: "jsonpcallback"
+	    	}).success(function() {// runs after the named call back
+  				mesoview.wordIndex++;
+  				if(mesoview.words[mesoview.wordIndex])
+  					{startAjax(mesoview.words[mesoview.wordIndex]);}
+  				});*/
  	});
  	
  	$('button#cancel').click(function(e){
  		e.preventDefault();
+		mesoview.closeSeedView();
+ 	});
+}
+
+MesoView.prototype.closeSeedView = function(){
  		var seedEle = document.getElementById('getSeedDiv');
  		var maskEle = document.getElementById('mask');
  		seedEle.parentNode.removeChild(seedEle);
- 		maskEle.parentNode.removeChild(maskEle);
- 	});
+ 		maskEle.parentNode.removeChild(maskEle);	
 }
 
 MesoView.prototype.setDefault = function(){
@@ -183,13 +203,14 @@ function defaultCallBack(req){//response
 function jsonpcallback(rtndata){
 	//var extract="";
 	for (var i in rtndata.query.pages) {
-    	console.log(rtndata.query.pages[i].extract); 
+    	//console.log(rtndata.query.pages[i].extract); 
     	extract += rtndata.query.pages[i].extract;
 	}
 	$('div#inputText textarea').val(extract);
 }
 
-function startAjax(word){
+function startAjax(word, wordOrPhrase){
+	
 	$.ajax({
   		url: "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles="+word+"&format=json&redirects",
   		type: 'GET',
@@ -197,8 +218,13 @@ function startAjax(word){
 	    jsonp : "callback",
 	    jsonpCallback: "jsonpcallback",
 
-	}).success(function() {
-		// nothing yet
+	}).success(function() { // would this be a good place for a llambda or closure?
+				
+		if (mesoview.words.length !=0 && wordOrPhrase){
+			var nextWord = mesoview.words.shift(); 		
+			startAjax(nextWord, true);
+		}
+		
 	});	
 }
 
