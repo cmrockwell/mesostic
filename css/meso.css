@@ -8,9 +8,9 @@ body{
 
 h1 {font-size: 1.50em; font-weight:  bold; font-variant: small-caps; letter-spacing: .25em; margin: 0;} /*change 3 h1 font size text-align: center;*/
 
-p {font-size: 1.00em; font-weight:  normal; font-variant: small-caps; letter-spacing: .1em; margin: 0;} 
+p {font-size: 1.00em; font-weight:  normal; font-variant: small-caps; letter-spacing: .1em; } 
 
-a {font-size: 1.00em; font-weight:  bold; font-variant: small-caps; letter-spacing: .1em; margin: 0; text-decoration: underline; } 
+a {font-size: 1.00em; font-weight:  bold; font-variant: small-caps; letter-spacing: .1em; } 
 
 label {font-size: 1.00em; font-weight:  normal; font-variant: small-caps; letter-spacing: .1em; margin: 0;} 
 
@@ -57,7 +57,7 @@ visibility:visible;
 	/*background-image: url('../images/transparent.gif');*/
 }
 
-#getSeedDiv {
+.getSeedDiv {
 	position: absolute;
 	/*width: 400px;*/
 	/*margin-top: 15%;*/
@@ -70,7 +70,7 @@ visibility:visible;
 }
 
 
-#getSeedForm input {
+.getSeedForm input {
 	/*float:left;*/
 	font-size:12px;
 	padding:4px 2px;
@@ -79,7 +79,7 @@ visibility:visible;
 	margin:2px 0 20px 10px;
 }
 
-#getSeedForm label {
+.getSeedForm label {
 	/*display:block;*/
 	font-weight:bold;
 	text-align:right;
@@ -87,12 +87,12 @@ visibility:visible;
 	/*float:left;*/
 	font-size:12px;
 }
-#getSeedDiv h1 {
+.getSeedDiv h1 {
 	font-size:14px;
 	font-weight:bold;
 	margin-bottom:8px;
 }
-#getSeedDiv p{
+.getSeedDiv p{
 	font-size:11px;
 	color:#666666;
 	/*margin-bottom:20px;*/

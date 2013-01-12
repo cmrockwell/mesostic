@@ -66,16 +66,24 @@ MesoView.prototype.init = function (c) {
 		mesoview.showSeedForm();
 		
 	});	
+
+	$('a#share').click(function(e){
+ 		e.preventDefault();
+ 		// open a window with the link and other options
+ 		mesoview.showShareWin();
+ 		
+ 	});
 			
 	$('a#next').click(function(e){
  		e.preventDefault();
  		Core.sendRequest('http://localhost/mesostic_back_end/classes/Mesostics.php?see=next&id='+mesoview.urlParams['id'],defaultCallBack);
+ 		$('#save').removeClass('show').addClass('hide');
  	});
 
  	$('a#previous').click(function(e){
  		e.preventDefault();
 		Core.sendRequest('http://localhost/mesostic_back_end/classes/Mesostics.php?see=previous&id='+mesoview.urlParams['id'],defaultCallBack);
-
+		$('#save').removeClass('show').addClass('hide');
  	});			
  	$('a#save').click(function(e){
  		e.preventDefault();
@@ -85,7 +93,7 @@ MesoView.prototype.init = function (c) {
  		var chars = new RegExp(/[\"\\\.(\n|\r|\r\n?)]/g);//(\n|\r|\r\n)
  		seedText = $('div#inputText textarea').val();
  		seedText = seedText.replace(chars," "); //string.replace(plus, " ")
- 		alert(seedText);
+ 		//alert(seedText);
  		seedText = encodeURIComponent(seedText);
  		
  		var typeText = mesoview.mesostic.type;
@@ -97,9 +105,29 @@ MesoView.prototype.init = function (c) {
  	});		
 }
 
+MesoView.prototype.showShareWin = function(){
+	var headerHtml = $("<h1> Share this Mesostic </h1>	<p>Copy the link below, then paste it your facebook or whatever.</p>");
+	//var linkA = $("<a href=\"http://localhost/mesostic/?id="+this.urlParams['id']+">mesostic\/\?id="+this.urlParams['id']+ "</a>");
+	var linkA = $("<a href=\"http://localhost/mesostic/?id="+mesoview.urlParams['id']+"\">Mesostic ID="+mesoview.urlParams['id']+ "</a>");
+	
+	var cancelBtn =$("<br> <button id=\"cancel\">Close Window </button>");
+ 	var maskDiv = $('<div id="mask" height="'+ wrapper.offsetHeight+'" width="'+wrapper.offsetWidth+'">' +'</div>');
+ 	var shareDiv = $('<div id="shareDiv" class="getSeedDiv"></div>');
+ 	
+ 	shareDiv.append(headerHtml);
+ 	shareDiv.append(linkA);
+ 	shareDiv.append(cancelBtn);	
+ 	wrapper.append(maskDiv);
+ 	wrapper.append(shareDiv);
+ 	
+ 	$('button#cancel').click(function(e){
+		mesoview.closeSeedView('shareDiv');
+ 	}); 	
+}
+
 MesoView.prototype.showSeedForm = function(){
 	var headerHtml = "<h1> Seed Text Form</h1>	<p>Paste seed text directly. Or, Generate seed text by entering a search phrase.</p>";
-	var formHtml = "<form id=\"getSeedForm\" > <label>Search Phrase: </label>" +
+	var formHtml = "<form id=\"getSeedForm\" class=\"getSeedForm\"> <label>Search Phrase: </label>" +
 	"<input type=\"text\" name=\"wordphrase\" id=\"wordphrase\" \"/> "+ 	
 	"<button type=\"submit\" id=\"getphrase\" name=\"getphrase\">Get Wikipedia Abstract</button> </form> "+
  	"<p>Or, you can choose one of these options.</p>"+
@@ -108,7 +136,7 @@ MesoView.prototype.showSeedForm = function(){
  	"<button id=\"randomize\">Randomize Current Seed Text</button>";
  	var getSeedElement = $(headerHtml+formHtml);
  	var maskDiv = $('<div id="mask" height="'+ wrapper.offsetHeight+'" width="'+wrapper.offsetWidth+'">' +'</div>');
- 	var getSeedDiv = $('<div id="getSeedDiv"></div>');
+ 	var getSeedDiv = $('<div id="getSeedDiv" class="getSeedDiv"></div>');
  	getSeedDiv.append(headerHtml);
  	getSeedDiv.append(formHtml);	
  	wrapper.append(maskDiv);
@@ -139,7 +167,7 @@ MesoView.prototype.showSeedForm = function(){
  	});
  	
  	$('button#cancel').click(function(e){
-		mesoview.closeSeedView();
+		mesoview.closeSeedView('getSeedDiv');
  	});
  	 
  	$('button#randomize').click(function(e){
@@ -149,8 +177,8 @@ MesoView.prototype.showSeedForm = function(){
  	
 }
 
-MesoView.prototype.closeSeedView = function(){
- 		var seedEle = document.getElementById('getSeedDiv');
+MesoView.prototype.closeSeedView = function(div){
+ 		var seedEle = document.getElementById(div);
  		var maskEle = document.getElementById('mask');
  		seedEle.parentNode.removeChild(seedEle);
  		maskEle.parentNode.removeChild(maskEle);	
@@ -232,7 +260,8 @@ MesoView.prototype.display = function(isOriginal){
 }
 
 function saveCallBack(req){
-	alert("blen");
+	
+	
 	//defaultCallBack(req);
 }
 
@@ -247,7 +276,7 @@ function defaultCallBack(req){//response
 	$('#spine').val(spineDecoded);
 	$('div#inputText textarea').val(seedDecoded);
 	mesoview.urlParams['id']=json[0]['id'];	
-	console.log(mesoview.urlParams['id']);
+	//console.log(mesoview.urlParams['id']);
 	mesoview.mesostic.reset();
 	mesoview.mesostic.init(spineDecoded, seedDecoded);
 	if (type ==='basic'){
