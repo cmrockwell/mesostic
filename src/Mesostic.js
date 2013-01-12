@@ -9,6 +9,7 @@ var Mesostic = function() {
 	this.spineLtrs = [];
     this.maxIndexOfSpineLtr =0;
 	this.textArr=[];
+	this.textCopy=[];
 	this.index = 0; // refers to place in seed text
 	this.spInd = -1; // refers to place in spine word
 	this.before ="";
@@ -44,6 +45,7 @@ Mesostic.prototype.setSeed = function(seed) {
     seedText = seed;
     var pattern = /[a-z-']+/gi; // matches words with no digits
     this.textArr = seedText.match(pattern); // creates array of seed text
+    this.textCopy = this.textArr;
 };
 
 Mesostic.prototype.getSeed = function(ind) {

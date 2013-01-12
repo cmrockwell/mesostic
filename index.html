@@ -14,21 +14,26 @@
     	<div id="wrapper">
         <h1>Supply Seed and Spine for a<br>Mesostic Typography</h1>
        
+        <label> Spine Word: </label>
+		<input type="text" name="spine" id ="spine" size="30" value="" 
+		title="The spine word or phrase runs down the middle of the mesostic. The letters are used to select words from the seed text."/>
+
         <button id="basicbtn" title="Basic mesostic imposes the fewest restrictions when matching words from the seed text."> Basic </button> 
         <button id="btn50" title="50% mesostics cannot have the second letter between any two capitalized"> 50% Mesostic </button> 
         <button id="btn100" title="100% mesostics cannot have the either letter between any two capitalized"> 100% Mesostic </button>
 
-        <label> Spine Word: </label>
-		<input type="text" name="spine" id ="spine" size="30" value="" 
-		title="The spine word or phrase runs down the middle of the mesostic. The letters are used to select words from the seed text."/>
 		<br/>
 
 		<div id="inputText">
-		<label> Seed Text: </label> <a href="" id="getseed" title="gets abstracts from Wikipedia matching the first 2 spine words">Get Seed Text</a><br/>
+		<label> Seed Text: </label> <br> <a href="" id="getseed" title="gets abstracts from Wikipedia matching the first 2 spine words">Control</a><br/>
 		<textarea rows="20" cols="60" title="Paste seed text here. Or select 'Get Seed Text' to insert it from Wikipedia"> </textarea>
 		</div>
 		<div id="poem">
-		<label> Mesostic </label> <br/>
+		<label> Mesostic </label> <a href="" id="save" class="hide" title="Save your mesostic to the gallery" >Save </a> <br/> 
+		<a href="" id="previous" class="show" title="See Previous"> &nbsp;&lt;&nbsp; </a> <label> See </label>   
+		<a href="" id="next" class="show" title="See Next"> &nbsp;&gt;&nbsp; </a>     
+		<label> &nbsp; | &nbsp; </label>  <a href="" id="share">Share</a> 
+		<br/>
 		<textarea rows="20" cols="30" readonly title="Your mesostic!"> </textarea>
 		</div>
 		

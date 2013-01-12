@@ -10,6 +10,7 @@ h1 {font-size: 1.50em; font-weight:  bold; font-variant: small-caps; letter-spac
 
 p {font-size: 1.00em; font-weight:  normal; font-variant: small-caps; letter-spacing: .1em; margin: 0;} 
 
+a {font-size: 1.00em; font-weight:  bold; font-variant: small-caps; letter-spacing: .1em; margin: 0; text-decoration: underline; } 
 
 label {font-size: 1.00em; font-weight:  normal; font-variant: small-caps; letter-spacing: .1em; margin: 0;} 
 
@@ -31,6 +32,18 @@ button,input {clear:both; margin: 10px 10px 10px 0px; padding: 4px 2px;}
 
 .text {width: 45%;}
 
+.hide {
+visibility:hidden;
+text-decoration: none;
+}
+
+.show {
+visibility:visible;
+}
+
+#previous, #next{
+	text-decoration: none;
+}
 
 #mask{
 	position: absolute;
