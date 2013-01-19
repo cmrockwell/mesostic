@@ -34,7 +34,8 @@ MesoView.prototype.init = function (c) {
 		mesoview.mesostic.init($('#spine').val() , $('div#inputText textarea').val());
 		//alert(mesoview.mesostic.getSpine());
 		mesoview.mesostic.makeNonPure();
-		mesoview.display(true); 	
+		mesoview.display(true); 
+			
 		//mesoview.mesostic.type='basic';
 	});
 	
@@ -67,7 +68,7 @@ MesoView.prototype.init = function (c) {
 		
 	});	
 
-	$('a#share').click(function(e){
+	$('#share').click(function(e){
  		e.preventDefault();
  		// open a window with the link and other options
  		mesoview.showShareWin();
@@ -76,13 +77,13 @@ MesoView.prototype.init = function (c) {
 			
 	$('a#next').click(function(e){
  		e.preventDefault();
- 		Core.sendRequest('http://localhost/mesostic_back_end/classes/Mesostics.php?see=next&id='+mesoview.urlParams['id'],defaultCallBack);
+ 		Core.sendRequest('classes/Mesostics.php?see=next&id='+mesoview.urlParams['id'],defaultCallBack);
  		$('#save').removeClass('show').addClass('hide');
  	});
 
  	$('a#previous').click(function(e){
  		e.preventDefault();
-		Core.sendRequest('http://localhost/mesostic_back_end/classes/Mesostics.php?see=previous&id='+mesoview.urlParams['id'],defaultCallBack);
+		Core.sendRequest('classes/Mesostics.php?see=previous&id='+mesoview.urlParams['id'],defaultCallBack);
 		$('#save').removeClass('show').addClass('hide');
  	});			
  	$('a#save').click(function(e){
@@ -99,16 +100,25 @@ MesoView.prototype.init = function (c) {
  		var typeText = mesoview.mesostic.type;
  		var spineText = mesoview.mesostic.getSpine(); 
  		var poemToSave = {seed:seedText, type:typeText, spine:spineText};
+ 		
  		var jsonPoem = JSON.stringify(poemToSave);
  		
-		Core.sendRequest('http://localhost/mesostic_back_end/classes/Mesostics.php?save',saveCallBack,jsonPoem); 
- 	});		
+		//Core.sendRequest('classes/Mesostics.php?save',saveCallBack,jsonPoem);
+		
+		$.ajax({
+		  url:"classes/Mesostics.php?save",
+		  type:"POST",
+		  data:jsonPoem,
+		  contentType:"application/json; charset=utf-8",
+		  dataType:"json",
+		  success: saveCallBack	}) 
+ 		});		
 }
 
 MesoView.prototype.showShareWin = function(){
 	var headerHtml = $("<h1> Share this Mesostic </h1>	<p>Copy the link below, then paste it your facebook or whatever.</p>");
 	//var linkA = $("<a href=\"http://localhost/mesostic/?id="+this.urlParams['id']+">mesostic\/\?id="+this.urlParams['id']+ "</a>");
-	var linkA = $("<a href=\"http://localhost/mesostic/?id="+mesoview.urlParams['id']+"\">Mesostic ID="+mesoview.urlParams['id']+ "</a>");
+	var linkA = $("<a href=\"http://while-1.com/mesostic/?id="+mesoview.urlParams['id']+"\">while-1.com/mesostic/?id="+mesoview.urlParams['id']+ "</a>");
 	
 	var cancelBtn =$("<br> <button id=\"cancel\">Close Window </button>");
  	var maskDiv = $('<div id="mask" height="'+ wrapper.offsetHeight+'" width="'+wrapper.offsetWidth+'">' +'</div>');
@@ -146,13 +156,13 @@ MesoView.prototype.showSeedForm = function(){
  		e.preventDefault();
  		var phrase = encodeURIComponent($('#wordphrase').val()); 
  		startAjax(phrase);
- 		mesoview.closeSeedView();
+ 		mesoview.closeSeedView('getSeedDiv');
  	});
  	
  	$('button#getword').click(function(e){
  		e.preventDefault();
  		startAjax(mesoview.words.shift(), true);
- 		mesoview.closeSeedView();
+ 		mesoview.closeSeedView('getSeedDiv');
  		/*$.ajax({
   			url: "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles="+mesoview.words[0]+"&format=json&redirects",
   			type: 'GET',
@@ -172,7 +182,7 @@ MesoView.prototype.showSeedForm = function(){
  	 
  	$('button#randomize').click(function(e){
 		mesoview.randomizeSeed();
-		mesoview.closeSeedView();
+		mesoview.closeSeedView('getSeedDiv');
  	});
  	
 }
@@ -205,7 +215,7 @@ MesoView.prototype.setDefault = function(){
 	if(this.urlParams['id']!=null){
 		idParm= this.urlParams['id'];
 		}
-	Core.sendRequest('http://localhost/mesostic_back_end/classes/Mesostics.php?id='+idParm,defaultCallBack);
+	Core.sendRequest('classes/Mesostics.php?id='+idParm,defaultCallBack);
 	
 	//set url attr for the < See > function
 	
@@ -255,27 +265,30 @@ MesoView.prototype.display = function(isOriginal){
 	
 	if(isOriginal){
 		$('#save').addClass('show').removeClass('hide');
+		$('#share').addClass('hide').removeClass('show');
 	}
 		
 }
 
 function saveCallBack(req){
 	
+	alert("Saved");
+	window.location.href = "http://while-1.com/mesostic/?id="+req.id;
+	$('#share').addClass('show').removeClass('hide');
 	
-	//defaultCallBack(req);
 }
 
 ///////////this does not seem right. I wanted this function part of the mesoview prototype. but it didn't work with the parameter req.
 function defaultCallBack(req){//response
 	var json = JSON.parse(req.responseText);
-	var seedDecoded = decodeURIComponent(json[0]['seed']);
+	var seedDecoded = decodeURIComponent(json.seed);
 	seedDecoded = seedDecoded.replace(/\+/g, " ");
-	var spineDecoded = decodeURIComponent(json[0]['spine']); 
+	var spineDecoded = decodeURIComponent(json.spine); 
 	spineDecoded = spineDecoded.replace(/\+/g, " ");
-	var type = json[0]['type'];
+	var type = json.type; //json[0]['type'];
 	$('#spine').val(spineDecoded);
 	$('div#inputText textarea').val(seedDecoded);
-	mesoview.urlParams['id']=json[0]['id'];	
+	mesoview.urlParams['id']=json.id;	
 	//console.log(mesoview.urlParams['id']);
 	mesoview.mesostic.reset();
 	mesoview.mesostic.init(spineDecoded, seedDecoded);
@@ -286,6 +299,7 @@ function defaultCallBack(req){//response
 	}
 	
 	mesoview.display();
+	$('#share').addClass('show').removeClass('hide');
 }
 
 function jsonpcallback(rtndata){

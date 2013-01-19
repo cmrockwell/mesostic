@@ -6,7 +6,7 @@ body{
 	font-size: 1em;
 }
 
-h1 {font-size: 1.50em; font-weight:  bold; font-variant: small-caps; letter-spacing: .25em; margin: 0;} /*change 3 h1 font size text-align: center;*/
+h1 {font-size: 1.40em; font-weight:  bold; font-variant: small-caps; letter-spacing: .25em; margin: 0;} /*change 3 h1 font size text-align: center;*/
 
 p {font-size: 1.00em; font-weight:  normal; font-variant: small-caps; letter-spacing: .1em; } 
 
@@ -16,7 +16,7 @@ label {font-size: 1.00em; font-weight:  normal; font-variant: small-caps; letter
 
 button {/*font-size: 0.75em; font-weight:  normal; font-variant: small-caps; letter-spacing: .1em; margin: 0;
 font:italic bold 12px/30px Georgia, serif;*/
-		font: 0.75em monospace;} 
+		font: 1.0em monospace;} 
 
 #wrapper{ 	margin: 20px; 
 			border: 0px solid #000; 
@@ -24,7 +24,11 @@ font:italic bold 12px/30px Georgia, serif;*/
 
 #poem {display:inline; float: left; }
 
-#poem textarea{ background-color:#DDD; color:#333;}
+textarea{
+	font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+}
+
+#poem textarea{ background-color:#DDD; color:#333;   }
 
 #inputText {display:inline; float: left;}
 
@@ -71,8 +75,8 @@ visibility:visible;
 
 
 .getSeedForm input {
-	/*float:left;*/
-	font-size:12px;
+	/*float:left;
+	font-size:12px; */
 	padding:4px 2px;
 	border:solid 1px #aacfe4;
 	width:200px;
@@ -84,16 +88,16 @@ visibility:visible;
 	font-weight:bold;
 	text-align:right;
 	width:140px;
-	/*float:left;*/
-	font-size:12px;
+	/*float:left;
+	font-size:12px;*/
 }
 .getSeedDiv h1 {
-	font-size:14px;
+	/*font-size:14px;*/
 	font-weight:bold;
 	margin-bottom:8px;
 }
 .getSeedDiv p{
-	font-size:11px;
+	/*font-size:11px;*/
 	color:#666666;
 	/*margin-bottom:20px;*/
 	border-bottom:solid 1px #b7ddf2;

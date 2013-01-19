@@ -32,14 +32,22 @@ describe('Meso View', function () {
 	xit('gets seed text thru ajax calls to wikipedia', function(){
 		
 		var newSeed = 'Babysitting is the practice of temporarily caring for a child. Babysitting is commonly performed as a job by teenagers for extra money.';
+		$('#spine').val('babysitter');
 		m.setSpine('babysitter');
-        runs(function() {
-            container.find('#getseed').click();
-        }, "an asynchronous method to update the seed text based on the spine word");
-        waitsFor(function() {
-            return $('div#inputText textarea').val() == newSeed;
-        }, "textarea to be set with babysitter extract from wikipedia", 5000);
 		
+		container.find('#getseed').click(); // load the form
+		
+		$(document).ready(function() // wait until DOM is ready
+        {
+        	runs(function() {
+        		container.find('#getSpine').click();	// click the request for abstract based on seed
+        	}, "an asynchronous method to update the seed text based on the spine word");
+        	
+        	waitsFor(function() {
+            	return $('div#inputText textarea').val() == newSeed;
+        	}, "textarea to be set with babysitter extract from wikipedia", 5000);
+		
+		});
 	});
 
 	it('sets the defaults using ajax call to server', function(){

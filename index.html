@@ -2,6 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta content="index, follow" name="robots">
+		<meta content="While-1 Mesostic Generator uses chance operations to create cross sectional poetry using seed text and wikipedia abstracts" name="description">
+		<meta content="While-1 Mesostic Generator chance operations poetry rockwell mesostic typography" name="keywords">
         <title>Mesostic</title>
         <link href="css/meso.css" rel="stylesheet" />
         <script type="text/javascript" src="lib/core-event-listeners.js"></script>
@@ -32,7 +35,7 @@
 		<label> Mesostic </label> <a href="" id="save" class="hide" title="Save your mesostic to the gallery" >Save </a> <br/> 
 		<a href="" id="previous" class="show" title="See Previous"> &nbsp;&lt;&nbsp; </a> <label> See </label>   
 		<a href="" id="next" class="show" title="See Next"> &nbsp;&gt;&nbsp; </a>     
-		<label> &nbsp; | &nbsp; </label>  <a href="" id="share">Share</a> 
+		<span id="share"> <label> &nbsp; | &nbsp; </label>  <a href="" >Share</a> </span>
 		<br/>
 		<textarea rows="20" cols="30" readonly title="Your mesostic!"> </textarea>
 		</div>
@@ -42,7 +45,14 @@
         </div>
         
         <div>
-        	<p> For more about mesostic style poems listen to John Cage read  <a href="http://archive.org/details/AM_1992_01_28" alt="Overpopulation and Art" target="_blank"> 'Overpopulation and Art'</a> </p>
+	     	<p> Participate in this Mesostic social coding project. Give feedback.  
+	     		<a href="http://github.com/cmrockwell/mesostic" 
+	     		alt="link to github repo" target="_blank"> github.com/cmrockwell/mesostic</a> <br/>
+	     		a free project by<a href="http://while-1.com/" 
+	     		alt="link to while-1.com" target="_blank">  While-1 LLC </a> 
+	     		</p>
+        	<p> For more on mesostics check out John Cage. Listen to...   
+        		<a href="http://archive.org/details/AM_1992_01_28" alt="Overpopulation and Art" target="_blank"> 'Overpopulation and Art'</a> </p>
         </div>
 	  	<script type="text/javascript">
 	    $(function() {
@@ -52,6 +62,17 @@
 	    	var mv = new MesoView(m);
 		    mv.init($('#wrapper')); 
 		});
-	  	</script>        
+	  	</script>   
+	  	<script type="text/javascript">		
+			var _gaq = _gaq || [];
+		  	_gaq.push(['_setAccount', 'UA-37560736-1']);
+		  	_gaq.push(['_trackPageview']);
+		
+		  	(function() {
+		    	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  	})();		
+		</script>     
     </body>
 </html>
