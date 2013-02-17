@@ -120,6 +120,11 @@ MesoView.prototype.showShareWin = function(){
 	//var linkA = $("<a href=\"http://localhost/mesostic/?id="+this.urlParams['id']+">mesostic\/\?id="+this.urlParams['id']+ "</a>");
 	var linkA = $("<a href=\"http://while-1.com/mesostic/?id="+mesoview.urlParams['id']+"\">while-1.com/mesostic/?id="+mesoview.urlParams['id']+ "</a>");
 	
+	var tweetIt = '<a href="https://twitter.com/share" ' +
+	'class="twitter-share-button" data-count="none">Tweet</a>'+
+	' <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);'+
+	'js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
+	
 	var cancelBtn =$("<br> <button id=\"cancel\">Close Window </button>");
  	var maskDiv = $('<div id="mask" height="'+ wrapper.offsetHeight+'" width="'+wrapper.offsetWidth+'">' +'</div>');
  	var shareDiv = $('<div id="shareDiv" class="getSeedDiv"></div>');
@@ -328,7 +333,7 @@ function startAjax(word, wordOrPhrase){
 
 	}).success(function() { // would this be a good place for a llambda or closure?
 				
-		if (mesoview.words.length !=0 && wordOrPhrase){
+		if (mesoview.words.length !==0 && wordOrPhrase){
 			var nextWord = mesoview.words.shift(); 		
 			startAjax(nextWord, true);
 		}
